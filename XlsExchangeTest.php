@@ -13,7 +13,8 @@ require_once 'XlsExchange.php';
 	;
 
 (new XlsExchange())
-	->setInputFile('orders.json')
+	->setInputFile('order.json')
 	->setOutputFile('items.xlsx')
+	->export()
 	;
 

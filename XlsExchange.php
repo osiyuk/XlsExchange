@@ -63,6 +63,24 @@ final class XlsExchange {
 	}
 
 
+	public function export()
+	{
+		$order = $this->parseJSON($this->path_to_input_json_file);
+
+		foreach ($order['items'] as $position) {
+			$item = $position['item'];
+			$result[] = [
+				'id' => $position['id'],
+				'price' => $position['price'],
+				'count' => $position['quantity'],
+				'barcode' => $item['barcode'],
+				'name' => $item['name'],
+			];
+		}
+		var_dump($result[3]);
+	}
+
+
 	public function testEAN13(string $barcode)
 	{
 		$result = $this->validateEAN13($barcode) ?? self::INVALID_BCODE;
