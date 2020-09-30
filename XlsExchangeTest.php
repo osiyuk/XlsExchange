@@ -12,3 +12,8 @@ require_once 'XlsExchange.php';
 	->testEAN13('2151246000019')
 	;
 
+(new XlsExchange())
+	->setInputFile('orders.json')
+	->setOutputFile('items.xlsx')
+	;
+

@@ -37,6 +37,21 @@ final class XlsExchange {
 
 	private const INVALID_BCODE = 'INVALID_BCODE';
 
+	protected $path_to_input_json_file;
+	protected $path_to_output_xlsx_file;
+
+	public function setInputFile(string $filename)
+	{
+		$this->path_to_input_json_file = $filename;
+		return $this;
+	}
+	public function setOutputFile(string $filename)
+	{
+		$this->path_to_output_xlsx_file = $filename;
+		return $this;
+	}
+
+
 	public function testEAN13(string $barcode)
 	{
 		$result = $this->validateEAN13($barcode) ?? self::INVALID_BCODE;
