@@ -1,6 +1,9 @@
 {
     "scripts": {
-        "test": "@php XlsExchangeTest.php"
+        "test": [
+            "@composer install",
+            "@php XlsExchangeTest.php"
+        ]
     },
     "require": {
         "shuchkin/simplexlsxgen": "^0.9.19"
