@@ -1,5 +1,7 @@
 <?php
 
+require_once 'vendor/autoload.php';
+
 
 trait parseJSON {
 
@@ -71,16 +73,18 @@ final class XlsExchange {
 
 		foreach ($order['items'] as $position) {
 			$item = $position['item'];
+
 			$items[] = [
 				$position['id'],
-				$position['price'],
-				$position['quantity'],
 				$item['barcode'],
 				$item['name'],
+				$position['quantity'],
+				$position['price'],
 			];
-break;
 		}
-		var_dump($items);
+
+		$xlsx = SimpleXLSXGen::fromArray($items);
+		$xlsx->saveAs($this->path_to_output_xlsx_file);
 	}
 
 
