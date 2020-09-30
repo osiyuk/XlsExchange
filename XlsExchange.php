@@ -83,7 +83,7 @@ trait uploadToFTP {
 			or die("failed chdir to '{$this->ftp_dir}'");
 
 		ftp_put($conn, $remote_file, $local_file)
-			or die("failed upload to '$fname'");
+			or die("failed upload to '$remote_file'");
 	}
 }
 
@@ -167,11 +167,11 @@ final class XlsExchange {
 
 		if ($this->isLocal) {
 			$xlsx->writeToFile($this->path_to_output_xlsx_file);
-                       //  DONE
 			return;
+			//  DONE
 		}
 
-               //  NOT TESTED, SORRY
+		//  NOT TESTED, SORRY
 		$filename = tempnam(sys_get_temp_dir(), 'xlsx_writer_');
 		$xlsx->writeToFile($filename);
 		$this->uploadToFTP($this->path_to_output_xlsx_file, $filename);
