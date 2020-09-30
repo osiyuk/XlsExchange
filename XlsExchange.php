@@ -102,6 +102,18 @@ final class XlsExchange {
 		'Сумма' => '0'
 	];
 
+	private const SHEET_HEADER_STYLES = [
+		'font' => 'Times New Roman',
+		'font-size' => 12,
+		'font-style' => 'bold',
+		'halign' => 'center',
+		'widths' => [10, 15, 50, 10, 10],
+	];
+
+	private const SHEET_ROW_STYLES = [
+		'font-size' => 11,
+	];
+
 	protected $path_to_input_json_file;
 	protected $path_to_output_xlsx_file;
 	protected $isLocal = true;
@@ -159,7 +171,11 @@ final class XlsExchange {
 		$row_style = [
 			'font-size' => 11,
 		];
-		$xlsx->writeSheetHeader('Sheet1', self::COLNAMES, $style);
+		$xlsx->writeSheetHeader(
+			'Sheet1',
+			self::COLNAMES,
+			self::SHEET_HEADER_STYLES
+		);
 
 		foreach ($items as $row) {
 			$xlsx->writeSheetRow('Sheet1', $row, $row_style);
