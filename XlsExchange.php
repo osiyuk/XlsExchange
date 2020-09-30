@@ -136,10 +136,7 @@ final class XlsExchange {
 	{
 		$order = $this->parseJSON($this->path_to_input_json_file);
 
-		foreach ($order['items'] as $position) {
-			$items[] = $this->extractFields($position);
-		}
-
+		$items = array_map([self, 'extractFields'], $order['items']);
 		usort($items, [self, 'compareFunc']);
 
 		$xlsx = new XLSXWriter();
