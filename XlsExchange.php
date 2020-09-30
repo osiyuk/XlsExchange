@@ -110,22 +110,28 @@ final class XlsExchange {
 	protected $isLocal = true;
 
 
+	private function extractFields(array $position) : array
+	{
+		$item = $position['item'];
+		$barcode = $this->validateEAN13($item['barcode']) ??
+			self::INVALID_BCODE;
+
+		return [
+			$position['id'],
+			$barcode,
+			$item['name'],
+			$position['quantity'],
+			$position['price'],
+		];
+	}
+
+
 	public function export()
 	{
 		$order = $this->parseJSON($this->path_to_input_json_file);
 
 		foreach ($order['items'] as $position) {
-			$item = $position['item'];
-			$barcode = $this->validateEAN13($item['barcode']) ??
-				self::INVALID_BCODE;
-
-			$items[] = [
-				$position['id'],
-				$barcode,
-				$item['name'],
-				$position['quantity'],
-				$position['price'],
-			];
+			$items[] = $this->extractFields($position);
 		}
 
 		usort($items, static function (array $a, array $b) {
