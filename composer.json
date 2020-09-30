@@ -1,5 +1,8 @@
 {
     "scripts": {
         "test": "@php XlsExchangeTest.php"
+    },
+    "require": {
+        "shuchkin/simplexlsxgen": "^0.9.19"
     }
 }
