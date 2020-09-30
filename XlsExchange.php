@@ -69,13 +69,13 @@ final class XlsExchange {
 
 		foreach ($order['items'] as $position) {
 			$item = $position['item'];
-			$result[] = [
-				'id' => $position['id'],
-				'price' => $position['price'],
-				'count' => $position['quantity'],
-				'barcode' => $item['barcode'],
-				'name' => $item['name'],
-			];
+			$result[] = implode("\t", [
+				$position['id'],
+				$position['price'],
+				$position['quantity'],
+				$item['barcode'],
+				$item['name'],
+			]);
 		}
 		var_dump($result[3]);
 	}
