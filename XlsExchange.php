@@ -139,7 +139,7 @@ final class XlsExchange {
 	use exportToXLSX;
 	use uploadToFTP;
 
-	private const INVALID_BCODE = 'INVALID_BCODE';
+	private const INVALID_BARCODE = 'INVALID_BCODE';
 	private const COLNAMES = [
 		'Id' => '0',
 		'ШК' => '@',
@@ -176,7 +176,7 @@ final class XlsExchange {
 	{
 		$item = $position['item'];
 		$barcode = $this->validateEAN13($item['barcode']) ??
-			self::INVALID_BCODE;
+			self::INVALID_BARCODE;
 
 		return [
 			$position['id'],
@@ -218,7 +218,9 @@ final class XlsExchange {
 
 	public function testEAN13(string $barcode)
 	{
-		$result = $this->validateEAN13($barcode) ?? self::INVALID_BCODE;
+		$result = $this->validateEAN13($barcode) ??
+			self::INVALID_BARCODE;
+
 		echo "$barcode validated $result\n";
 		return $this;
 	}
