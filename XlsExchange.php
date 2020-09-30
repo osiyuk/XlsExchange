@@ -44,6 +44,42 @@ trait validateEAN13 {
 }
 
 
+trait exportToXLSX {
+	protected $xlsx_writer;
+
+	protected function exportToXLSX(
+		array $sheet_header_names_types,
+		array $sheet_rows_data,
+		array $sheet_header_styles = null,
+		array $sheet_row_styles = null
+	) {
+		$this->xlsx_writer = new XLSXWriter();
+
+		$writer =& $this->xlsx_writer;
+		$sheet_name = 'Sheet1';
+
+		$writer->writeSheetHeader(
+			$sheet_name,
+			$sheet_header_names_types,
+			$sheet_header_styles
+		);
+
+		foreach ($sheet_rows_data as $row) $writer->writeSheetRow(
+			$sheet_name,
+			$row,
+			$sheet_row_styles
+		);
+	}
+
+	protected function writeToFile(string $filename)
+	{
+		$writer =& $this->xlsx_writer;
+
+		$writer->writeToFile($filename);
+	}
+}
+
+
 trait uploadToFTP {
 	protected $ftp_host;
 	protected $ftp_login;
@@ -91,6 +127,7 @@ trait uploadToFTP {
 final class XlsExchange {
 	use parseJSON;
 	use validateEAN13;
+	use exportToXLSX;
 	use uploadToFTP;
 
 	private const INVALID_BCODE = 'INVALID_BCODE';
@@ -159,6 +196,14 @@ final class XlsExchange {
 			return $b[$price] - $a[$price];
 		});
 
+		$this->exportToXLSX(
+			self::COLNAMES,
+			$items,
+			self::SHEET_HEADER_STYLES,
+			self::SHEET_ROW_STYLES
+		);
+
+/*
 		$xlsx = new XLSXWriter();
 		$style = [
 			'font' => 'Times New Roman',
@@ -180,16 +225,17 @@ final class XlsExchange {
 		foreach ($items as $row) {
 			$xlsx->writeSheetRow('Sheet1', $row, $row_style);
 		}
+*/
 
 		if ($this->isLocal) {
-			$xlsx->writeToFile($this->path_to_output_xlsx_file);
+			$this->writeToFile($this->path_to_output_xlsx_file);
 			return;
 			//  DONE
 		}
 
 		//  NOT TESTED, SORRY
 		$filename = tempnam(sys_get_temp_dir(), 'xlsx_writer_');
-		$xlsx->writeToFile($filename);
+		$this->writeToFile($filename);
 		$this->uploadToFTP($this->path_to_output_xlsx_file, $filename);
 	}
 
