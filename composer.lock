@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "462caff861313aa5a61a7778ee2a1247",
+    "content-hash": "8519951cf8d83f6c176681f7f865549f",
     "packages": [
         {
             "name": "mk-j/php_xlsxwriter",
@@ -47,53 +47,6 @@
                 "xlsx"
             ],
             "time": "2020-01-11T02:53:20+00:00"
-        },
-        {
-            "name": "shuchkin/simplexlsxgen",
-            "version": "0.9.19",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/shuchkin/simplexlsxgen.git",
-                "reference": "a551f6485b1b408dd92f63c09f9c77d72551d7dd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/shuchkin/simplexlsxgen/zipball/a551f6485b1b408dd92f63c09f9c77d72551d7dd",
-                "reference": "a551f6485b1b408dd92f63c09f9c77d72551d7dd",
-                "shasum": ""
-            },
-            "require": {
-                "ext-mbstring": "*",
-                "ext-zlib": "*"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/SimpleXLSXGen.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Sergey Shuchkin (SMSPILOT)",
-                    "email": "sergey.shuchkin@gmail.com",
-                    "homepage": "https://shuchkin.ru/"
-                }
-            ],
-            "description": "Export data to Excel XLSx file. PHP XLSX generator.",
-            "homepage": "https://github.com/shuchkin/simplexlsxgen",
-            "keywords": [
-                "backend",
-                "creator",
-                "excel",
-                "generator",
-                "php",
-                "xlsx"
-            ],
-            "time": "2020-08-23T09:07:29+00:00"
         }
     ],
     "packages-dev": [],

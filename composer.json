@@ -6,7 +6,6 @@
         ]
     },
     "require": {
-        "shuchkin/simplexlsxgen": "^0.9.19",
         "mk-j/php_xlsxwriter": "^0.38.0"
     }
 }
