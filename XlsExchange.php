@@ -78,6 +78,11 @@ trait exportToXLSX {
 
 		$writer->writeToFile($filename);
 	}
+
+	protected function tempFile() : string
+	{
+		return tempnam(sys_get_temp_dir(), 'xlsx_writer_');
+	}
 }
 
 
@@ -205,7 +210,7 @@ final class XlsExchange {
 		}
 
 		//  NOT TESTED, SORRY
-		$filename = tempnam(sys_get_temp_dir(), 'xlsx_writer_');
+		$filename = $this->tempFile();
 		$this->writeToFile($filename);
 		$this->uploadToFTP($this->path_to_output_xlsx_file, $filename);
 	}
