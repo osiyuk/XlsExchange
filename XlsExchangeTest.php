@@ -13,6 +13,13 @@ require_once 'XlsExchange.php';
 	;
 
 (new XlsExchange())
+	->setFtpHost('localhost')
+	->setFtpLogin('root')
+	->setFtpPassword('password')
+	->setFtpDir('/home')
+	;
+
+(new XlsExchange())
 	->setInputFile('order.json')
 	->setOutputFile('items.xlsx')
 	->export()

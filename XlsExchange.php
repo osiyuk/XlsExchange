@@ -44,9 +44,54 @@ trait validateEAN13 {
 }
 
 
+trait uploadToFTP {
+	protected $ftp_host;
+	protected $ftp_login;
+	protected $ftp_password;
+	protected $ftp_dir;
+
+	public function setFtpHost(string $host = '')
+	{
+		$this->ftp_host = $host;
+		return $this;
+	}
+	public function setFtpLogin(string $user = '')
+	{
+		$this->ftp_login = $user;
+		return $this;
+	}
+	public function setFtpPassword(string $pass = '')
+	{
+		$this->ftp_password = $pass;
+		return $this;
+	}
+	public function setFtpDir(string $dir = '')
+	{
+		$this->ftp_dir = $directory;
+		return $this;
+	}
+
+	protected function uploadToFTP(string $fname, handle $fh)
+	{
+		$conn = ftp_connect($this->ftp_host)
+			or die("failed connect to '{$this->ftp_host}'");
+
+		ftp_login($conn, $this->ftp_login, $this->ftp_password)
+			or die("failed login as '{$this->ftp_login}'");
+
+		ftp_chdir($conn, $this->ftp_dir)
+			or die("failed chdir to '{$this->ftp_dir}'");
+
+		ftp_fput($conn, $fname, $handle)
+			or die("failed upload to '$fname'");
+	}
+}
+
+
 final class XlsExchange {
 	use parseJSON;
 	use validateEAN13;
+	use uploadToFTP;
 
 	private const INVALID_BCODE = 'INVALID_BCODE';
 	private const COLNAMES = [
