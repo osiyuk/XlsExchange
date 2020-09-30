@@ -157,6 +157,15 @@ final class XlsExchange {
 	protected $isLocal = true;
 
 
+	private function exportItems(array $items)
+	{
+		$this->exportToXLSX(
+			self::COLNAMES,
+			$items,
+			self::SHEET_HEADER_STYLES,
+			self::SHEET_ROW_STYLES);
+	}
+
 	private function extractFields(array $position) : array
 	{
 		$item = $position['item'];
