@@ -65,7 +65,7 @@ trait uploadToFTP {
 		$this->ftp_password = $pass;
 		return $this;
 	}
-	public function setFtpDir(string $dir = '')
+	public function setFtpDir(string $directory = '')
 	{
 		$this->ftp_dir = $directory;
 		return $this;
