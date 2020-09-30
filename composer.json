@@ -1,7 +1,7 @@
 {
     "scripts": {
         "test": [
-            "@composer install",
+            "@composer install --quiet",
             "@php XlsExchangeTest.php"
         ]
     },
