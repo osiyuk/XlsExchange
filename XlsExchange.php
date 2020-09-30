@@ -47,6 +47,7 @@ final class XlsExchange {
 	use validateEAN13;
 
 	private const INVALID_BCODE = 'INVALID_BCODE';
+	private const COLNAMES = ['Id', 'ШК', 'Название', 'Кол-во', 'Сумма'];
 
 	protected $path_to_input_json_file;
 	protected $path_to_output_xlsx_file;
@@ -66,18 +67,20 @@ final class XlsExchange {
 	public function export()
 	{
 		$order = $this->parseJSON($this->path_to_input_json_file);
+		$items = [self::COLNAMES];
 
 		foreach ($order['items'] as $position) {
 			$item = $position['item'];
-			$result[] = implode("\t", [
+			$items[] = [
 				$position['id'],
 				$position['price'],
 				$position['quantity'],
 				$item['barcode'],
 				$item['name'],
-			]);
+			];
+break;
 		}
-		var_dump($result[3]);
+		var_dump($items);
 	}
 
 
