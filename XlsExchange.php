@@ -71,7 +71,7 @@ trait uploadToFTP {
 		return $this;
 	}
 
-	protected function uploadToFTP(string $fname, handle $fh)
+	protected function uploadToFTP(string $remote_file, string $local_file)
 	{
 		$conn = ftp_connect($this->ftp_host)
 			or die("failed connect to '{$this->ftp_host}'");
@@ -82,7 +82,7 @@ trait uploadToFTP {
 		ftp_chdir($conn, $this->ftp_dir)
 			or die("failed chdir to '{$this->ftp_dir}'");
 
-		ftp_fput($conn, $fname, $handle)
+		ftp_put($conn, $remote_file, $local_file)
 			or die("failed upload to '$fname'");
 	}
 }
@@ -104,6 +104,7 @@ final class XlsExchange {
 
 	protected $path_to_input_json_file;
 	protected $path_to_output_xlsx_file;
+	protected $isLocal = true;
 
 	public function setInputFile(string $filename)
 	{
@@ -113,6 +114,12 @@ final class XlsExchange {
 	public function setOutputFile(string $filename)
 	{
 		$this->path_to_output_xlsx_file = $filename;
+		return $this;
+	}
+	public function setFtpHost(string $host)
+	{
+		$this->ftp_host = $host;
+		$this->isLocal = false;
 		return $this;
 	}
 
@@ -157,7 +164,17 @@ final class XlsExchange {
 		foreach ($items as $row) {
 			$xlsx->writeSheetRow('Sheet1', $row, $row_style);
 		}
-		$xlsx->writeToFile($this->path_to_output_xlsx_file);
+
+		if ($this->isLocal) {
+			$xlsx->writeToFile($this->path_to_output_xlsx_file);
+                       //  DONE
+			return;
+		}
+
+               //  NOT TESTED, SORRY
+		$filename = tempnam(sys_get_temp_dir(), 'xlsx_writer_');
+		$xlsx->writeToFile($filename);
+		$this->uploadToFTP($this->path_to_output_xlsx_file, $filename);
 	}
 
 
