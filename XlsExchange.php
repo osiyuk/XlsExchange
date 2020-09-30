@@ -64,7 +64,8 @@ trait exportToXLSX {
 			$sheet_header_styles
 		);
 
-		foreach ($sheet_rows_data as $row) $writer->writeSheetRow(
+		foreach ($sheet_rows_data as $row)
+		$writer->writeSheetRow(
 			$sheet_name,
 			$row,
 			$sheet_row_styles
