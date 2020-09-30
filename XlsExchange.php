@@ -125,6 +125,12 @@ final class XlsExchange {
 		];
 	}
 
+	static function compareFunc(array $A, array $B) : int
+	{
+		$j = 4; // price
+		return $B[$j] - $A[$j];
+	}
+
 
 	public function export()
 	{
@@ -134,10 +140,7 @@ final class XlsExchange {
 			$items[] = $this->extractFields($position);
 		}
 
-		usort($items, static function (array $a, array $b) {
-			$price = 4;
-			return $b[$price] - $a[$price];
-		});
+		usort($items, [self, 'compareFunc']);
 
 		$xlsx = new XLSXWriter();
 		$style = [
