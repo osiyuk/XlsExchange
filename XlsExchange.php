@@ -131,6 +131,7 @@ trait uploadToFTP {
 final class XlsExchange {
 	use parseJSON;
 	use validateEAN13;
+	use exportToXLSX;
 	use uploadToFTP;
 
 	private const INVALID_BCODE = 'INVALID_BCODE';
@@ -195,33 +196,17 @@ final class XlsExchange {
 		$items = array_map([self, 'extractFields'], $order['items']);
 		usort($items, [self, 'compareFunc']);
 
-		$xlsx = new XLSXWriter();
-		$style = [
-			'font' => 'Times New Roman',
-			'font-size' => 12,
-			'font-style' => 'bold',
-			'halign' => 'center',
-			'widths' => [10, 15, 50, 10, 10],
-		];
-
-		$row_style = [
-			'font-size' => 11,
-		];
-		$xlsx->writeSheetHeader('Sheet1', self::COLNAMES, $style);
-
-		foreach ($items as $row) {
-			$xlsx->writeSheetRow('Sheet1', $row, $row_style);
-		}
+		$this->exportItems($items);
 
 		if ($this->isLocal) {
-			$xlsx->writeToFile($this->path_to_output_xlsx_file);
+			$this->writeToFile($this->path_to_output_xlsx_file);
 			return;
 			//  DONE
 		}
 
 		//  NOT TESTED, SORRY
 		$filename = tempnam(sys_get_temp_dir(), 'xlsx_writer_');
-		$xlsx->writeToFile($filename);
+		$this->writeToFile($filename);
 		$this->uploadToFTP($this->path_to_output_xlsx_file, $filename);
 	}
 
