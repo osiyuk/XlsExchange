@@ -49,7 +49,13 @@ final class XlsExchange {
 	use validateEAN13;
 
 	private const INVALID_BCODE = 'INVALID_BCODE';
-	private const COLNAMES = ['Id', 'ШК', 'Название', 'Кол-во', 'Сумма'];
+	private const COLNAMES = [
+		'Id' => '0',
+		'ШК' => '@',
+		'Название' => '@',
+		'Кол-во' => '0',
+		'Сумма' => '0'
+	];
 
 	protected $path_to_input_json_file;
 	protected $path_to_output_xlsx_file;
@@ -69,7 +75,6 @@ final class XlsExchange {
 	public function export()
 	{
 		$order = $this->parseJSON($this->path_to_input_json_file);
-		$items = [self::COLNAMES];
 
 		foreach ($order['items'] as $position) {
 			$item = $position['item'];
@@ -83,8 +88,13 @@ final class XlsExchange {
 			];
 		}
 
-		$xlsx = SimpleXLSXGen::fromArray($items);
-		$xlsx->saveAs($this->path_to_output_xlsx_file);
+		$xlsx = new XLSXWriter();
+		$xlsx->writeSheetHeader('Sheet1', self::COLNAMES);
+
+		foreach ($items as $row) {
+			$xlsx->writeSheetRow('Sheet1', $row);
+		}
+		$xlsx->writeToFile($this->path_to_output_xlsx_file);
 	}
 
 
