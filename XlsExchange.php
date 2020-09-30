@@ -88,6 +88,11 @@ final class XlsExchange {
 			];
 		}
 
+		usort($items, static function (array $a, array $b) {
+			$price = 4;
+			return $b[$price] - $a[$price];
+		});
+
 		$xlsx = new XLSXWriter();
 		$style = [
 			'font' => 'Times New Roman',
