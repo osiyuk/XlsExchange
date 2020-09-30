@@ -1,6 +1,16 @@
 <?php
 
 
+trait parseJSON {
+
+	protected function parseJSON(string $filename, bool $assoc = true)
+	{
+		$json = file_get_contents($filename);
+		return json_decode($json, $assoc);
+	}
+}
+
+
 trait validateEAN13 {
 
 	protected function validateEAN13(string $barcode) : ?string
@@ -33,6 +43,7 @@ trait validateEAN13 {
 
 
 final class XlsExchange {
+	use parseJSON;
 	use validateEAN13;
 
 	private const INVALID_BCODE = 'INVALID_BCODE';
