@@ -89,7 +89,12 @@ final class XlsExchange {
 		}
 
 		$xlsx = new XLSXWriter();
-		$xlsx->writeSheetHeader('Sheet1', self::COLNAMES);
+		$style = [
+			'font' => 'Times New Roman',
+			'font-style' => 'bold',
+			'halign' => 'center',
+		];
+		$xlsx->writeSheetHeader('Sheet1', self::COLNAMES, $style);
 
 		foreach ($items as $row) {
 			$xlsx->writeSheetRow('Sheet1', $row);
