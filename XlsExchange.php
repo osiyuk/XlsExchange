@@ -78,10 +78,12 @@ final class XlsExchange {
 
 		foreach ($order['items'] as $position) {
 			$item = $position['item'];
+			$barcode = $this->validateEAN13($item['barcode']) ??
+				self::INVALID_BCODE;
 
 			$items[] = [
 				$position['id'],
-				$item['barcode'],
+				$barcode,
 				$item['name'],
 				$position['quantity'],
 				$position['price'],
