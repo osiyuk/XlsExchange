@@ -2,6 +2,9 @@
 
 require_once 'XlsExchange.php';
 
+define('TEST_EAN13', true);
+
+if (TEST_EAN13)
 (new XlsExchange())
 	->testEAN13('2109970000015')
 	->testEAN13('2154231000019')
