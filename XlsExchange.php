@@ -44,6 +44,42 @@ trait validateEAN13 {
 }
 
 
+trait exportToXLSX {
+	protected $xlsx_writer;
+
+	protected function exportToXLSX(
+		array $sheet_header_names_types,
+		array $sheet_rows_data,
+		array $sheet_header_styles = null,
+		array $sheet_row_styles = null
+	) {
+		$this->xlsx_writer = new XLSXWriter();
+
+		$writer =& $this->xlsx_writer;
+		$sheet_name = 'Sheet1';
+
+		$writer->writeSheetHeader(
+			$sheet_name,
+			$sheet_header_names_types,
+			$sheet_header_styles
+		);
+
+		foreach ($sheet_rows_data as $row) $writer->writeSheetRow(
+			$sheet_name,
+			$row,
+			$sheet_row_styles
+		);
+	}
+
+	protected function writeToFile(string $filename)
+	{
+		$writer =& $this->xlsx_writer;
+
+		$writer->writeToFile($filename);
+	}
+}
+
+
 trait uploadToFTP {
 	protected $ftp_host;
 	protected $ftp_login;
