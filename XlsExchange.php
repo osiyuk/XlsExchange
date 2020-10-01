@@ -50,27 +50,6 @@ trait uploadToFTP {
 	protected $ftp_password;
 	protected $ftp_dir;
 
-	public function setFtpHost(string $host = '')
-	{
-		$this->ftp_host = $host;
-		return $this;
-	}
-	public function setFtpLogin(string $user = '')
-	{
-		$this->ftp_login = $user;
-		return $this;
-	}
-	public function setFtpPassword(string $pass = '')
-	{
-		$this->ftp_password = $pass;
-		return $this;
-	}
-	public function setFtpDir(string $directory = '')
-	{
-		$this->ftp_dir = $directory;
-		return $this;
-	}
-
 	protected function uploadToFTP(string $remote_file, string $local_file)
 	{
 		$conn = ftp_connect($this->ftp_host)
@@ -84,6 +63,30 @@ trait uploadToFTP {
 
 		ftp_put($conn, $remote_file, $local_file)
 			or die("failed upload to '$remote_file'");
+	}
+
+	public function setFtpHost(string $host = '')
+	{
+		$this->ftp_host = $host;
+		return $this;
+	}
+
+	public function setFtpLogin(string $user = '')
+	{
+		$this->ftp_login = $user;
+		return $this;
+	}
+
+	public function setFtpPassword(string $pass = '')
+	{
+		$this->ftp_password = $pass;
+		return $this;
+	}
+
+	public function setFtpDir(string $directory = '')
+	{
+		$this->ftp_dir = $directory;
+		return $this;
 	}
 }
 
@@ -105,23 +108,6 @@ final class XlsExchange {
 	protected $path_to_input_json_file;
 	protected $path_to_output_xlsx_file;
 	protected $isLocal = true;
-
-	public function setInputFile(string $filename)
-	{
-		$this->path_to_input_json_file = $filename;
-		return $this;
-	}
-	public function setOutputFile(string $filename)
-	{
-		$this->path_to_output_xlsx_file = $filename;
-		return $this;
-	}
-	public function setFtpHost(string $host)
-	{
-		$this->ftp_host = $host;
-		$this->isLocal = false;
-		return $this;
-	}
 
 
 	public function export()
@@ -182,6 +168,26 @@ final class XlsExchange {
 	{
 		$result = $this->validateEAN13($barcode) ?? self::INVALID_BCODE;
 		echo "$barcode validated $result\n";
+		return $this;
+	}
+
+
+	public function setInputFile(string $filename)
+	{
+		$this->path_to_input_json_file = $filename;
+		return $this;
+	}
+
+	public function setOutputFile(string $filename)
+	{
+		$this->path_to_output_xlsx_file = $filename;
+		return $this;
+	}
+
+	public function setFtpHost(string $host)
+	{
+		$this->ftp_host = $host;
+		$this->isLocal = false;
 		return $this;
 	}
 }
